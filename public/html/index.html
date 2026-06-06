@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="charset" content="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu site</title>
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+            box-sizing: border-box;
+        }
+        html {
+            padding: 0;
+            --columns: 3;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+        }
+
+        body {
+            padding: 4px 4px 0 4px;
+            /* cor interessante: rgb(6, 173, 200); */
+            background-color: rgb(148, 233, 133);
+        }
+
+        h1 {
+            margin-top: 0;
+            text-align: center;
+        }
+
+        #projects-list {
+            display: grid;
+            grid-template-columns: repeat(var(--columns), calc(80%/var(--columns)));
+            justify-content: space-between;
+        }
+
+        #projects-list > div {
+            display: flex;
+            flex-direction: column;
+            border-radius: 5px;
+            background-color: lightgray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Servidor Web</h1>
+    <p>Este é um hub para os meus conhecimentos de programação, experimentos e mais umas outras coisas por aí.</p>
+    <div id="projects-list" role="list">
+    </div>
+    <script src="index.js" type="module"></script>
+</body>
+
+</html>
