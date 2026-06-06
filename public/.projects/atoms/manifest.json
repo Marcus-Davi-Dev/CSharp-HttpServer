@@ -1,0 +1,15 @@
+{
+    "name": "Simulação atoms",
+    "short_name": "Atoms",
+    "description": "Uma simulação de corpos interagindo entre si.",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "images/logo192x192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        }
+    ],
+    "start_url": "/atoms/",
+    "scope": "/atoms/"
+}
