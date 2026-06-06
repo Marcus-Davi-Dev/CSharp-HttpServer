@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json"></link>
+  <title>Teste de WebGPU</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    canvas {
+      width: 500px;
+      height: 500px;
+      image-rendering: pixelated;
+      outline: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas width="500" height="500"></canvas>
+  <script id="helper">
+    let warnFlag = true;
+    function el(selector, parent = document) {
+      return parent.querySelector(selector);
+    }
+    function miniCanvas() {
+      const canvas = el("canvas");
+      if (canvas.hasAttribute("data-mini")) {
+        return;
+      }
+      canvas.style.width = `${(canvas.style.width === "" ? canvas.width : parseInt(canvas.style.width)) / 10}px`;
+      canvas.style.height = `${(canvas.style.height === "" ? canvas.height : parseInt(canvas.style.height)) / 10}px`;
+      canvas.setAttribute("data-mini", "true");
+    }
+
+    function warn(state) {
+      warnFlag = state;
+    }
+    class MatrixTable {
+      constructor(table) {
+        this.table = table;
+        this.table.classList.add("matrix-table");
+        this.table.style.tableLayout = "fixed";
+      }
+      showMatrix(matrix) {
+        if (el(".matrix-table") && warnFlag) {
+          console.warn("Uma tabela de matrix já existe. Se quiser mostrar o valor mais recente use o .update");
+        }
+        miniCanvas();
+
+        const mx1 = document.createElement("tr");
+        const mx2 = document.createElement("tr");
+        const mx3 = document.createElement("tr");
+        const mx4 = document.createElement("tr");
+
+        for (let i = 0,
+          keys = Object.keys(matrix.__proto__).slice(6, 22); i < keys.length; i += 4) {
+          const row = [mx1, mx2, mx3, mx4][i % 4];
+          const th = document.createElement("th");
+          th.id = keys[i];
+          th.textContent = matrix[keys[i]];
+          th.style.overflow = "hidden";
+          th.style.textOverflow = "ellipsis";
+          row.appendChild(th);
+          console.log(i);
+          if (i + 4 > 15 && i !== 15) {
+            i = i - 15;
+          }
+        }
+
+        const tbody = document.createElement("tbody");
+        tbody.appendChild(mx1);
+        tbody.appendChild(mx2);
+        tbody.appendChild(mx3);
+        tbody.appendChild(mx4);
+        this.table.appendChild(tbody);
+        console.log("foi");
+        document.body.insertBefore(this.table, el("canvas"));
+        this.table.style.width = `${Math.max(this.table.getBoundingClientRect().width, this.table.getBoundingClientRect().height)}px`;
+        this.table.style.height = `${Math.max(this.table.getBoundingClientRect().width, this.table.getBoundingClientRect().height)}px`;
+      }
+
+      destroy() {
+        this.table.innerHTML = "";
+        this.table.remove();
+      }
+
+      update(matrix) {
+        // pass;
+      }
+    }
+
+    function applyM(matrix) {
+      const point = new DOMPoint(200, 200, 100, 1);
+      return point.matrixTransform(matrix);
+    }
+  </script>
+  <script src="atoms.js" type="module"></script>
+</body>
+
+</html>
